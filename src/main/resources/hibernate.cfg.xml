@@ -12,6 +12,7 @@
         <property name="show_sql">true</property>
         <mapping class="com.hbma.app.Stock"></mapping>
         <mapping class="com.hbma.app.Employee"></mapping>
+        <mapping class="com.hbma.app.Emps"></mapping>
         <!-- You can also specify a whole package with <mapping package="com.hbma.entity" /> -->
     </session-factory>
 </hibernate-configuration>
