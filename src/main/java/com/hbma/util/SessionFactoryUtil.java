@@ -16,7 +16,7 @@ public class SessionFactoryUtil {
 		}
 	}
 	
-	public static SessionFactory getSessionFactory(){
+	public synchronized static SessionFactory getSessionFactory(){
 		if(factory == null){
 			factory = buildSessionFactory();
 		}

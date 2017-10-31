@@ -4,13 +4,12 @@ package com.hbma.app.thread;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.dialect.identity.SybaseAnywhereIdentityColumnSupport;
 import org.hibernate.query.Query;
 
 import com.hbma.app.Emps;
+import com.hbma.util.SessionFactoryUtil;
+import com.hbma.util.SessionUtil;
 
 public class RunnableThread implements Runnable{
 
@@ -24,24 +23,23 @@ public class RunnableThread implements Runnable{
 		System.out.println("Thread running ."+this.name);
 		int i = 0;
 		
-		while(i<500){
+		while(i<3){
 			try {
 			deleteFromTable();
 			i++;
-				Thread.sleep(100);
+			Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-			
+		
 		System.out.println("run over "+i+" "+this.name);
 		return;
 	}
 	
 	private void deleteFromTable(){
-		SessionFactory factory = new Configuration().configure().buildSessionFactory();
-		Session session = factory.openSession();
+		Session session = SessionUtil.openSession();
 		try{
 		Transaction tx = session.beginTransaction();
 		String hql = "FROM Emps as emps ORDER BY emps.hireDate";
@@ -66,11 +64,7 @@ public class RunnableThread implements Runnable{
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally {
-			if(session!= null){
-				session.close();
-				System.out.println("closing connection");
-			}
-			factory.close();
+			SessionUtil.closeSession(session);
 		}
 		return;
 	}

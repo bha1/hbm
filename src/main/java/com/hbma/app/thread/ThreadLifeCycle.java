@@ -2,6 +2,8 @@ package com.hbma.app.thread;
 
 import java.util.logging.Level;
 
+import com.hbma.util.SessionFactoryUtil;
+
 
 public class ThreadLifeCycle {
 public static void main(String[] args) {
@@ -12,27 +14,28 @@ public static void main(String[] args) {
 	Thread th5 = new Thread(new RunnableThread("T5"));
 	Thread th6 = new Thread(new RunnableThread("T6"));
 	java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
-//	try {
+	try {
 		th1.start();
 		th2.start();
 		th3.start();
 		th4.start();
 		th5.start();
 		th6.start();
-//		th1.join();
-//		th2.join();
-//		th3.join();
-//		th4.join();
-//		th5.join();
-//		th6.join();
+		th1.join();
+		th2.join();
+		th3.join();
+		th4.join();
+		th5.join();
+		th6.join();
 //		System.out.println(th.isAlive());
 //		th.getStackTrace();
 //		System.out.println(th1.isAlive());
 //		th.interrupt();
-//	} catch (InterruptedException e) {
-//		e.printStackTrace();
-//	}
-	
+	} catch (InterruptedException e) {
+		e.printStackTrace();
+	}finally{
+		SessionFactoryUtil.shutdown();	
+}
 	System.out.println("execution over");
 	return;
 }
